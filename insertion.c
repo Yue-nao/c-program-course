@@ -3,31 +3,30 @@
 #include<string.h> 
 int array_insert(int *x,int y,int Len){
 	/*insert y into array x[]*/
-	/*method one
-	int tmp;
-	for(int i=0;i<Len;i++){
-		if(y<x[i]||i==Len-1){
-			tmp=x[i];
-			x[i]=y;
-			y=tmp;
-		}
-	} */
-	/*method two
-	for(int i=0;i<Len;i++){
+	int tmp=Len-1;
+	for(int i=0;i<Len-1;i++){
 		if(y<x[i]){
-			for(int j=Len-1;j>i;j++){
-				x[j]=x[j-1];
-			}
-			x[i]=y;
+			tmp=i;
 			break;
 		}
-	}*/
+	}
+	for(int i=Len-1;i>tmp;i--){
+		x[i]=x[i-1];
+	}
+	x[tmp]=y; 
 	return 0;
-} 
-int main(int argc,char argv[]){
+}
+int printf_array(int *x,int len){
+	for(int i=0;i<len;i++){
+		printf("%d ",x[i]);
+	}
+	printf("\n");
+	return 0;
+}
+int main(int argc,char *argv[]){
 	int len=strlen(argv[1]);
 	int comma_count=0;
-	for(int i=0;i<len;i++){
+	for(int i=0;i<len;++i){
 		if(argv[1][i]==','){
 			comma_count++;
 		}
@@ -36,15 +35,15 @@ int main(int argc,char argv[]){
 	a[0]=atoi(&argv[1][0]);
 	int m=1;
 	for(int i=0;i<len;i++){
-		if(argv[0][i]==','){
+		if(argv[1][i]==','){
 			a[m]=atoi(&argv[1][i+1]);
+			m++;
 		}
 	}
+	printf_array(a,m);
 	int b=atoi(argv[2]);
-	array_insert(a,b,comma_count+2);
-	for(int i=0;i<comma_count+2;i++){
-		printf("%d ",a[i]);
-	}
-	printf("\n");
+	array_insert(a,b,m+1);
+	printf_array(a,m+1);
+	free(a); 
 	return 0;
 } 
