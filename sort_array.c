@@ -53,7 +53,7 @@ int main(int argc,char *argv[])
 			comma_count++;
 		}
 	}
-	int *a=(int*)malloc((comma_count+2)*4);
+	int *a=(int*)malloc((comma_count+1)*4);
 	a[0]=atoi(&argv[1][0]);
 	int m=1;
 	for(int i=0;i<len;i++)
@@ -69,5 +69,6 @@ int main(int argc,char *argv[])
 	array_sort(a,m);
 	printf_array(a,m);
 	free(a); 
+	a=NULL; 
 	return 0;
 } 
