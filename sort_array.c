@@ -13,25 +13,9 @@ int min_value_location(int *a,int len)
 			tmp=a[i];
 		}
 	}
-	printf("The min value is %d\n",tmp);
-	printf("The index is %d\n",location); 
+	a[location]=a[0];
+	a[0]=tmp;
 	return 0;
-} 
-int array_sort(int *x,int len)
-{
-	for(int i=0;i<len;i++)
-	{
-		for(int j=i+1;j<len;j++)
-		{
-			if(x[i]>x[j])
-			{
-				int tmp=x[i];
-				x[i]=x[j];
-				x[j]=tmp;
-			}
-		}
-	}
-	return 0; 
 }
 int printf_array(int *x,int len)
 {
@@ -65,10 +49,13 @@ int main(int argc,char *argv[])
 		}
 	}
 	printf_array(a,m);
+	for(int i=0;i<m-1;i++)
+	{
+		min_value_location(a+i,m-i);
+	}
 	min_value_location(a,m);
-	array_sort(a,m);
 	printf_array(a,m);
 	free(a); 
 	a=NULL; 
 	return 0;
-} 
+}
