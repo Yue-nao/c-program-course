@@ -4,9 +4,26 @@
 int print_file(char *filename)
 {
 	FILE *fp=fopen(filename,"r");
+	if(fp==NULL)
+	{
+		printf("Error: open file failed");
+		return 1;
+	}//check whether the file exists	
 	char a[200];
-	fgets(a,200,fp);
-	printf("%s",a);
+	//fgets(a,sizeof(a),fp);//read the top line of the file
+	char *p=fgets(a,sizeof(a),fp);
+	while(p!=NULL)//if the last line was read,fgets() will return NULL
+	{
+		char *token=strtok(a,",");
+		while(token!=NULL)
+		{
+			int tmp=atoi(token);
+			printf("%d ",tmp);
+			token=strtok(NULL,",");
+		}
+		printf("\n");
+		p=fgets(a,sizeof(a),fp);
+	}
 	fclose(fp);
 	return 0;
 }
