@@ -1,6 +1,39 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+int min_value_location(int *a,int len)
+{
+	int location=0;
+	int tmp=a[0];
+	for(int i=1;i<len;i++)
+	{
+		if(a[i]<tmp)
+		{
+			location=i;
+			tmp=a[i];
+		}
+	}
+	a[location]=a[0];
+	a[0]=tmp;
+	return 0;
+}
+int sort_array(int *a,int len)
+{
+        for(int i=0;i<len-1;i++)
+        {
+                min_value_location(a+i,len-i);
+        }
+        return 0;
+}
+int printf_array(int *x,int len)
+{
+	for(int i=0;i<len;i++)
+	{
+		printf("%d ",x[i]);
+	}
+	printf("\n");
+	return 0;
+}
 int print_file(char *filename)
 {
 	FILE *fp=fopen(filename,"r");
@@ -14,14 +47,17 @@ int print_file(char *filename)
 	char *p=fgets(a,sizeof(a),fp);
 	while(p!=NULL)//if the last line was read,fgets() will return NULL
 	{
-		char *token=strtok(a,",");
+		int m[10];
+		int len=0;
+		char *token=strtok(a,",\n");
 		while(token!=NULL)
 		{
-			int tmp=atoi(token);
-			printf("%d ",tmp);
-			token=strtok(NULL,",");
+			m[len]=atoi(token);
+			len++;
+			token=strtok(NULL,",\n");
 		}
-		printf("\n");
+		sort_array(m,len);
+		printf_array(m,len);
 		p=fgets(a,sizeof(a),fp);
 	}
 	fclose(fp);
